@@ -1,6 +1,6 @@
 # Reverse Shell Cheat Sheet
 
-You can find them all artound the internet. I couldn't find them all in one place, so I write them down here. Don't hesitate to tell me if you find some more and I will add them to this list.
+You can find them all around the internet. I couldn't find them all in one place, so I write them down here. Don't hesitate to tell me if you find some more and I will add them to this list.
 
 ## One-liners
 
