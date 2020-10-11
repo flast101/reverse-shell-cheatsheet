@@ -223,4 +223,4 @@ Process p=new ProcessBuilder(cmd).redirectErrorStream(true).start();Socket s=new
 
 The very good Pentestmonkey [php reverse shell](https://github.com/flast101/reverse-shell-cheatsheet/blob/master/php-reverse-shell.php).
 
-
+Be Curious, Learning is Life ! :smiley:
